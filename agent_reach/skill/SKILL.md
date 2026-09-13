@@ -1,31 +1,18 @@
 ---
 name: agent-reach
 description: >
-  MUST USE when user wants to 调研/research/搜索/search/查/找/look up anything
-  on the internet — e.g. 全网调研 X / 帮我调研一下 X / 查一下 X / 搜搜 X /
-  看看大家怎么评价 X / X 上有什么讨论 / research this topic。
-
-  Also MUST USE when user mentions any platform or shares any URL/链接:
-  小红书/xiaohongshu/xhs, Twitter/推特/X, B站/bilibili, Reddit, Facebook,
-  Instagram, V2EX, LinkedIn/领英/招聘/求职/jobs, YouTube, GitHub code search, 小宇宙播客,
-  雪球/股票行情, RSS feeds, or any web URL.
-
-  15 platforms, multi-backend routing (OpenCLI / per-platform CLIs / APIs).
-  Zero config for 6 channels. Run `agent-reach doctor --json` to see which
-  backend serves each platform right now.
-
-  NOT for: 写报告/数据分析/翻译等内容加工（本 skill 只负责从互联网获取内容）；
-  发帖/评论/点赞等写操作；已有专门 skill 的平台（先用专门 skill）。
-
-  【路由方式】SKILL.md 包含路由表和常用命令，复杂场景需按需阅读对应分类的 references/*.md。
-  分类：search / social (小红书/推特/B站/V2EX/Reddit/Facebook/Instagram) / career(LinkedIn) / dev(github) / web(网页/文章/RSS) / video(YouTube/B站/播客) / finance(雪球/股票)。
+  Route retrieval from supported social, video, podcast, RSS and developer platforms
+  when platform-specific extraction is needed or the host's public-web tools fail.
+  Use only the matching backend reference. Prefer an available dedicated platform
+  skill, including moore-wechat-article-downloader for mp.weixin.qq.com articles.
+  Ordinary web URLs and general research do not require this router.
 metadata:
   homepage: https://github.com/Panniantong/Agent-Reach
 ---
 
 # Agent Reach — 互联网能力路由器
 
-15 平台、多后端。**本 skill 存在时必须用它访问这些平台，不要自己发明方案。**
+15 平台、多后端。按任务需要选择平台提取或失败回退；普通网页阅读优先使用宿主已有工具。微信公众号优先使用已安装的 `moore-wechat-article-downloader`，只加载当前平台的参考资料。
 
 ## 常驻规则（全程适用）
 
@@ -35,12 +22,8 @@ metadata:
    只有用户任务明确需要该平台时，才按对应 reference 的只读命令手动验证。
 2. **声明你在用什么**：开始干活前说一句「使用 agent-reach 的 X 平台 / Y 后端」。
 3. **失败按 references 里的重试链处理**，不要瞎猜命令。
-4. **全网调研类任务**：组合多平台（Exa 搜索 + Twitter/Reddit 看讨论 + 小红书/B站看中文场景），并行收集再汇总。
-5. **替用户盯版本**：完成一次较大的调研/多平台任务后，顺手跑
-   `agent-reach check-update`（很快，一个 API 调用）。有新版就在收尾汇报里附一句：
-   「Agent Reach 有新版 vX.Y.Z，复制这句话给我即可更新：帮我更新 Agent Reach：
-   https://raw.githubusercontent.com/Panniantong/agent-reach/main/docs/update.md」。
-   不要中断当前任务去更新，也不要重复提醒同一个版本。
+4. **多平台研究**：只选择能补充本次证据的来源；无需为了使用本 Skill 遍历所有平台。
+5. **更新检查**：仅在用户请求检查或更新本工具时运行 `agent-reach check-update`；普通检索结束不自动检查、提醒或更新。
 
 ## 路由表
 
