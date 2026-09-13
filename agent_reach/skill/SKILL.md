@@ -103,7 +103,7 @@ agent-reach doctor --json
 
 ## 工作区规则
 
-**不要在 agent workspace 创建文件。** 使用 `/tmp/` 存放临时输出，`~/.agent-reach/` 存放持久数据。
+临时读取输出使用系统临时目录（Unix 的 `/tmp/` 或 Windows 的 `%TEMP%`）。用户明确要求的交付文件可写入其指定任务目录。只有明确持久化请求或有效同范围授权，才将数据保存到 `~/.agent-reach/` 或其他持久目录。
 
 ## 详细文档
 
@@ -122,4 +122,4 @@ agent-reach doctor --json
 如果某个 channel 需要配置，获取安装指南：
 https://raw.githubusercontent.com/Panniantong/agent-reach/main/docs/install.md
 
-用户只需提供 cookies，其他配置由 agent 完成。
+普通公开读取不索要 cookies。确需登录时，先核对已有同服务、同范围授权，使用已批准的本地登录或凭据入口；不要默认要求把 cookies 粘贴到对话。配置修改与账号授权沿用宿主门禁。
